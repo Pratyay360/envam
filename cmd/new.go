@@ -37,9 +37,13 @@ func init() {
 
 func NewVar(varFile, varName string) {
 	varValue := os.Getenv(varName)
+	varFolder := os.Getenv("ENVAM_VAR_FOLDER")
 	if varValue == "" {
 		fmt.Println("var not found:", varName)
-		cmd := exec.Command("rbw", "add", "--folder", "shell", varName)
+		if varFolder == "" {
+			varFolder = "shell"
+		}
+		cmd := exec.Command("rbw", "add", "--folder", varFolder, varName)
 		cmd.Stdin = os.Stdin
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
@@ -48,5 +52,5 @@ func NewVar(varFile, varName string) {
 			os.Exit(1)
 		}
 	}
-	ExistingVar(varFile, varName)
+	ExistingVar(varFile, varName, varFolder)
 }

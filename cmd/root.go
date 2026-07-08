@@ -5,7 +5,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,14 +17,16 @@ package cmd
 
 import (
 	"os"
+
 	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "envman",
-	Short: "A small cli tool for managing environment variables (just for me, uses rbw internally)",
-	Long: `A small cli tool for managing environment variables (just for me, uses rbw internally).`,
+	Use:   "envam",
+	Short: "env ammend",
+	Long:  `A small cli tool for managing environment variables (just for me, uses rbw internally).`,
 }
+
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -34,7 +36,6 @@ func Execute() {
 
 func init() {
 	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.config/vars)")
-
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
