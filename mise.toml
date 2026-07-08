@@ -1,0 +1,6 @@
+[tools]
+go = "1.26.4"
+"go:github.com/spf13/cobra-cli" = "latest"
+
+[deps]
+go = { auto = true }

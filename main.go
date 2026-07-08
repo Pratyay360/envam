@@ -1,42 +1,32 @@
+/*
+Copyright © 2026 pratyay360
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package main
 
 import (
-	"fmt"
 	"os"
-	"strings"
+	"pratyay360/envman/cmd"
 )
 
-var varFile = os.Getenv("ENV_FILE")
-
 func main() {
-
-	if len(os.Args) < 3 {
-		fmt.Println("Usage: program <variable-name>")
-		os.Exit(1)
-	}
-	if varFile == "" {
-		varFile = os.Getenv("HOME") + "/.config/vars"	
-	}
-	varName := os.Args[1]
-	expandedPath := os.ExpandEnv(varFile)
-	config, err := os.ReadFile(expandedPath)
-	if err != nil {
-		if !os.IsNotExist(err) {
-			fmt.Printf("Error reading file: %v\n", err)
-			fmt.Printf("Does the file exists?")
-			os.Exit(1)
+	if len(os.Args) > 1 {
+		if os.Args[1] == "-e" {
+			os.Args[1] = "existing"
+		} else if os.Args[1] == "-n" {
+			os.Args[1] = "new"
 		}
-		config = []byte{}
 	}
-	if strings.Contains(string(config), varName) {
-		fmt.Println("Variable already exists: " + varName)
-		return
-	}
-	cta := "export " + varName + "=\"$(rbw get --folder shell " + varName + ")\"\n"
-	err = os.WriteFile(expandedPath, append(config, []byte(cta)...), 0644)
-	if err != nil {
-		fmt.Printf("Error writing file: %v\n", err)
-		os.Exit(1)
-	}
-	fmt.Println("Variable added: " + varName)
+	cmd.Execute()
 }
